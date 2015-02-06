@@ -37,9 +37,9 @@ public class Recursion{
     }
 
     public static void main(String[]args){
-	Recursion test = new Recursion();
+	/*Recursion test = new Recursion();
 	System.out.println(test.fact(10));
 	System.out.println(test.fib(10));
-	System.out.println(test.sqrt(100));
+	System.out.println(test.sqrt(100));*/
     }
 }
