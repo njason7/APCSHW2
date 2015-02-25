@@ -1,0 +1,52 @@
+public NQueens{
+    public int counter;
+    public char[][] board;
+
+    final static String clear =  "\033[2J";
+    final static String hide =  "\033[?25l";
+    final static String show =  "\033[?25h";
+
+    public String name(){
+	return "ng.jason";
+    }
+
+    //terminal specific character to move the cursor
+    private String go(int x,int y){
+	return ("\033[" + x + ";" + y + "H");
+    }
+ 
+    public void wait(int millis){
+	try {
+	    Thread.sleep(millis);
+	}
+	catch (InterruptedException e) {
+	}
+    }
+
+    public String toString(){
+	String ans = "\n";
+	for(int i=0;i<board.length*board.length;i++){
+	    if (i%board.length == 0 && i!=0){
+		ans+="\n";
+	    }
+	    ans += board[i%board.length][i/board.length];
+	    ans += "\t";
+	}
+	return clear + hide + go(0,0) + ans + "\n" + show;
+    }
+
+
+    public class NQueens(int size){
+	board = new char[size][size];
+	for (int i=0;i<size;i++){
+	    for (int j=0;j<size;j++){
+		board[i][j] = '_';
+	    }
+	}
+    }
+    
+    public static void main (String[]args){
+	NQueens test = new NQueens(Integer.parseInt(args[0]));
+	System.out.println(test);
+    }
+}
