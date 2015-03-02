@@ -1,0 +1,63 @@
+public class mergeSort{
+ 
+    public 
+    
+    public int[] merge(int[] arr){
+	int[] divide1 = int[arr.length/2];
+	int[] divide2 = int[arr.length-arr.length/2];
+	for (int i=0;i < arr.length/2;i++){
+	    divide1[i] = arr[i];
+	}
+	for (int j=arr.length/2;j < arr.length;j++){
+	    divide2[j-arr.length/2] = arr[j];
+	}
+	return merge(divide1,divide2);
+    }
+
+    public int[] merge(int[] array1,int[] array2){
+	if (array1.length > 1){
+	    int[] divide1 = int[array1.length/2];
+	    int[] divide2 = int[array1.length-array1.length/2];
+	    for (int i=0;i < array1.length/2;i++){
+		divide1[i] = array1[i];
+	    }
+	    for (int j=array1.length/2;j < array1.length;j++){
+		divide2[j-array1.length/2] = array1[j];
+	    }
+	    array1 = merge(divide1,divide2);
+	}
+	return sort(array1,array2);
+    }
+    
+
+    public int[] sort(int[] array1,int[] array2){
+	int track1 = 0;
+	int track2 = 0;
+	int resultno = 0;
+	int[] result = new int[array1.length+array2.length];
+	while (track1 < array1.length && track2 < array2.length){
+	    if (array1[track1] < array2[track2]){
+		result[resultno] = array1[track1];
+		track1++;
+		resultno++;
+	    }else{
+		result[resultno] = array2[track2];
+		track2++;
+		resultno++;
+	    }
+	}
+	if (track1 == array1.length - 1){
+	    for (int i = track2;i<array2.length;i++){
+		result[resultno] = array2[i];
+		resultno++;
+	    }
+	}else if (track2 == array2.length -1){
+	    for (int i = track1;i<array1.length;i++){
+		result[resultno] = array1[i];
+		resultno++;
+	    }
+	}
+	return result;
+    }
+   
+}
