@@ -1,0 +1,69 @@
+import java.util.*;
+import java.io.*;
+public class ctravel{
+    
+    private char[][]field;
+    private int startr,startc,endr,endc,steps,counter;
+
+    int counter = 0;
+
+    public ctravel(String filename){
+	try{
+	    Scanner in = new Scanner(new File(filename));
+	    String line = in.nextLine();
+	    String[] vars = line.split(" ");
+	    r = Integer.parseInt(vars[0]);
+	    c = Integer.parseInt(vars[1]);
+	    steps = Integer.parseInt(vars[2]);
+	    field = new char[r][c];
+	    line = " ";
+	    for(int a = 0;a<r;a++){
+		line = in.nextLine();
+		for (int b=0;b<c;b++){
+		    field[a][b] = line.charAt(b);
+		}
+	    }
+	    line = in.nextLine();
+	    String[] loc = line.split(" ");
+	    startr = Integer.parseInt(loc[0]);
+	    startc = Integer.parseInt(loc[1]);
+	    endr = Integer.parseInt(loc[2]);
+	    endc = Integer.parseInt(loc[3]);
+	}
+	catch(Exception e){
+	    System.out.println("File not found");
+	    e.printStackTrace();
+	    System.exit(0);
+	}
+    }
+
+    public int solve(){
+	if (this.solve(startr,startc)){
+	    return counter;
+	}
+    }
+	
+    
+    public boolean solve(int r,int c){
+	if (r<field.length && r >=0 && c<field[0].length && c>=0){
+	    int stepcounter = 0;
+	    if (stepcounter == steps && r == startr && c == startc){
+		counter++;
+		return true;
+	    }
+	    if (field[r][c] == '.'){
+		stepcounter++;
+		if (solve(r+1,c) || solve(r,c+1) || solve(r-1,c) || solve(r,c-1)){
+		    return true;
+		}
+		stepcounter--;
+	    }
+	    return false;
+	}
+    }
+
+    public static void main (String[]args){
+	if(args.length > 0){
+	    ctravel test = new ctravel(args[0]);
+	    System.out.println(ctravel.solve());
+}
