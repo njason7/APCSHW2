@@ -1,0 +1,35 @@
+import java.util.Arrays.*;
+
+public class quick{
+
+    public static int partition(int[] ary,int si, int ei){
+	int ri = si + (int)(Math.random()*(ei-si+1));
+	pivot = ary[ri];
+	int end = ei;
+	int pivindex = si;
+	int[] copy= new int[ary.length];
+	for (int i=0;i<ary.length;i++){
+	    if (i<si || i>ei){
+		copy[i] = ary[i];
+	    }
+	}
+	for (i=si;i<=end;i++){
+	    if (ary[i] < pivot){
+		d[pivindex] = ary[i];
+		pivindex++;
+	    }else if (ary[i] > pivot){
+		d[ei] = ary[i];
+		ei--;
+	    }
+	}
+	d[pivindex] = pivot;
+	System.arraycopy(d,0,ary,0,ary.length);
+	return pivindex;
+    }
+
+    public static void main (String[]args){
+	int[] ary = {1,4,2,5,7,12,9}
+	System.out.println(ary,0,ary.length-1);
+	System.out.println(Arrays.toString(ary));
+    }
+}
