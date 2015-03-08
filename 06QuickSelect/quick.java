@@ -6,7 +6,6 @@ public class quick{
 	int ri = si + (int)(Math.random()*(ei-si+1));
 	int pivot = ary[ri];
 	int end = ei;
-	int pivindex = si;
 	int[] copy= new int[ary.length];
 	for (int i=0;i<ary.length;i++){
 	    if (i<si || i>ei){
@@ -27,21 +26,33 @@ public class quick{
 	return si;
     }
 
-    public static int quickselect(int[] ary,int si,int ei,int index){
-	int partindex = partition(ary,si,ei);
-	if (index == partindex){
+    public static int quickselect(int[] ary,int index){
+	int si = 0;
+	int ei = ary.length-1;
+	int partindex = -1;
+	/*if (index == partindex){
 	    return ary[index];
 	}else if (index > partindex){
 	    return quickselect(ary,partindex,ei,index);
 	}else if (index < partindex){
 	    return quickselect(ary,si,partindex,index);
 	}
-	return index;
+	return index;*/
+	while (index != partindex){
+	    partindex = partition(ary,si,ei);
+	    if (index > partindex){
+		si = partindex;
+		partindex = partition(ary,si,ei);
+	    }else if (index < partindex){
+		ei = partindex;
+		partindex = partition(ary,si,ei);
+	    }
+	}
+	return ary[partindex];
     }
 
     public static void main (String[]args){
 	int[] ary = new int[] {1,4,2,5,7,12,9};
-	System.out.println(quickselect(ary,0,ary.length-1,2));
-	System.out.println(Arrays.toString(ary));
+	System.out.println(quickselect(ary,2));
     }
 }
