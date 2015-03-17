@@ -1,7 +1,7 @@
 public class Sorts{
     
     public static String name(){
-    	return "ng.jason"
+    	return "ng.jason";
     }
     
     public static void mergesort(int[] arr){
