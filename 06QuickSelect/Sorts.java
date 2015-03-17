@@ -1,6 +1,10 @@
 import java.util.Arrays;
 
-public class quick{
+public class Sorts{
+
+    public static String name(){
+    	return "ng.jason";
+    }
 
     public static int partition(int[] ary,int si, int ei){
 	int ri = si + (int)(Math.random()*(ei-si+1));
