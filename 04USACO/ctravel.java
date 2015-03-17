@@ -5,6 +5,10 @@ public class ctravel{
     private char[][]field;
     private int r,c,startr,startc,endr,endc,steps,counter;
 
+    public String name(){
+	return "ng.jason"
+}
+
     public ctravel(String filename){
 	try{
 	    Scanner in = new Scanner(new File(filename));
