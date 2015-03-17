@@ -1,5 +1,9 @@
 public class Sorts{
     
+    public static String name(){
+    	return "ng.jason"
+    }
+    
     public static void mergesort(int[] arr){
 	int[] divide1 = new int[arr.length/2];
 	int[] divide2 = new int[arr.length-arr.length/2];
