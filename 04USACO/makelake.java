@@ -6,6 +6,10 @@ public class makelake{
     int R, C, E, N, targetR, targetC, targetS, Tallest, Vol;
     int[][] stomps, field;
 
+    public String name(){
+    	return "ng.jason"
+    }
+
     public makelake(String filename){
 	try{
 	    Scanner in = new Scanner(new File(filename));
