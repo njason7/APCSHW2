@@ -20,12 +20,9 @@ public class MyLinkedList<T>{
 	    size++;
 	    return true;
 	}else{
-	    LNode<T> current = start;
-	    LNode<T> next = new LNode<T>(value);
-	    while (current.getNext() != null){
-		current = current.getNext();
-	    }
-	    current.setNext(next);
+	    LNode<T> newend = new LNode<T>(value);
+	    end.setNext(newend);
+	    end = newend;
 	}
 	size++;
 	return true;
@@ -48,6 +45,10 @@ public class MyLinkedList<T>{
 	    }
 	    LNode<T> next = new LNode<T>(value,current);
 	    previous.setNext(next);
+	}else if(index == size){
+	    LNode<T> newend = new LNode<T>(value);
+	    end.setNext(newend);
+	    end = newend;
 	}else{
 	    LNode<T> next = new LNode<T>(value,current);
 	    start = next;
@@ -110,7 +111,7 @@ public class MyLinkedList<T>{
 	int index = 0;
 	LNode<T> current = start;
 	while (index < size){
-	    if (current.getData() == value){
+	    if (current.getData().equals(value)){
 		break;
 	    }
 	    if (index == size-1){
