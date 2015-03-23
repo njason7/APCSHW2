@@ -1,37 +1,36 @@
 import java.util.*;
 
-public class MyStack<E>{
+public class MyStack<T>{
     	
     public String name(){
 	return "ng.jason";
     }
     
-    LinkedList<E> list;
+    MyLinkedList<T> list;
 
     public MyStack(){
-	list = new LinkedList<E>();
+	list = new MyLinkedList<T>();
     }
 
     public boolean empty(){
 	return (list.size() == 0);
     }
 
-    public E push(E value){
+    public T push(T value){
 	if (empty()){
 	    list.add(value);
 	}else{
-	    list.addFirst(value);
+	    list.add(0,value);
 	}
 	return value;
     }
 
-    public E peek(){
+    public T peek(){
 	return list.get(0);
     }
 
-    public E pop(){
-	E save = list.peek();
-	return list.removeFirst();
+    public T pop(){
+	return list.remove(0);
     }
     
     public static void main (String[]args){
