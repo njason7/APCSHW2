@@ -6,7 +6,7 @@ public class MyStack<T>{
 	return "ng.jason";
     }
     
-    MyLinkedList<T> list;
+    private MyLinkedList<T> list;
 
     public MyStack(){
 	list = new MyLinkedList<T>();
