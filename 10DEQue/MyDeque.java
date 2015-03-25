@@ -20,7 +20,18 @@ public class MyDeque<T>{
 	if (head == -1){
 	    head = ary.length-1;
 	}
-	System.out.println(Arrays.toString(ary));
+    }
+
+    public void addLast(T value){
+	if (size == ary.length){
+	    ary = resize(ary);
+	}
+	ary[tail] = value;
+	tail++;
+	size++;
+	if (tail == ary.length){
+	    tail = 0;
+	}
     }
 
     public Object[] resize(Object[] ary){
@@ -33,9 +44,6 @@ public class MyDeque<T>{
 	}
 	head = size/2-1;
 	tail = size*3/2;
-	System.out.println(Arrays.toString(clone));
-	System.out.println(head);
-	System.out.println(tail);
 	return clone;
     }
 
@@ -45,14 +53,14 @@ public class MyDeque<T>{
 
     public static void main (String[]args){
 	MyDeque<Integer> test = new MyDeque<Integer>();
-	test.addFirst(1);
-	test.addFirst(2);	
-	test.addFirst(3);
-	test.addFirst(4);
-	test.addFirst(5);
-	test.addFirst(6);
-	test.addFirst(7);
-	test.addFirst(8);
+	test.addLast(1);
+	test.addLast(2);	
+	test.addLast(3);
+	test.addLast(4);
+	test.addLast(5);
+	test.addLast(6);
+	test.addLast(7);
+	test.addLast(8);
 	System.out.println(test);
     }
 }
