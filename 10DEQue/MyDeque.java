@@ -47,6 +47,28 @@ public class MyDeque<T>{
 	return clone;
     }
 
+    public T removeFirst(){
+	if (head == ary.length -1){
+	    head = 0;
+	}else{
+	    head++;
+	}
+	T save = (T)ary[head];
+	ary[head] = null;
+	return save;
+    }
+
+    public T removeLast(){
+	if (tail == 0){
+	    tail = ary.length-1;
+	}else{
+	    tail--;
+	}
+	T save = (T)ary[tail];
+	ary[tail] = null;
+	return save;
+    }
+    
     public String toString(){
 	return Arrays.toString(ary);
     }	
@@ -61,6 +83,10 @@ public class MyDeque<T>{
 	test.addLast(6);
 	test.addLast(7);
 	test.addLast(8);
+	System.out.println(test.removeLast());
+	System.out.println(test.removeLast());
+	System.out.println(test.removeLast());
+	System.out.println(test.removeLast());	
 	System.out.println(test);
     }
 }
