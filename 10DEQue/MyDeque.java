@@ -70,7 +70,17 @@ public class MyDeque<T>{
     }
     
     public String toString(){
-	return Arrays.toString(ary);
+	String result = "";
+	for (int i = 1;i<ary.length;i++){
+	    if (ary[(head+i)%ary.length] != null){
+		if (i > 1){
+		    result += ", ";
+		}
+		result += ary[(head+i)%ary.length];
+	    }
+	}
+	//return Arrays.toString(ary);
+	return result;
     }	
 
     public static void main (String[]args){
@@ -83,6 +93,7 @@ public class MyDeque<T>{
 	test.addLast(6);
 	test.addLast(7);
 	test.addLast(8);
+	System.out.println(test);
 	System.out.println(test.removeLast());
 	System.out.println(test.removeLast());
 	System.out.println(test.removeLast());
