@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-public class Maze{
+public class Maze implements Deque{
 
     private char[][]maze;
     private int maxx,maxy;
@@ -107,4 +107,43 @@ public class Maze{
 	return false;//by default the maze didn't get solved
 	}*/
 
+    public class Coordinates{
+
+	public int[] coor = new int[2];
+	
+	public Coordinates(int r, int c){
+	    coor[0] = r;
+	    coor[1] = c;
+	}
+	
+	public int getr(){
+	    return coor[0];
+	}
+	
+	public int getc(){
+	    return coor[1];
+	}
+    }
+
+    private Deque<Coordinates> frontier;
+
+    public boolean solveBFS(){
+	return solveBFS(false);
+    }
+
+    public boolean solveDFS(){
+	return solveDFS(false);
+    }
+    
+    public boolean solveBFS(boolean animate){
+	frontier.addFirst(startx,starty);
+	while (maze[frontier.peek().getr()][frontier.remove().getc()] != 'E'){
+
+	}
+	return true;
+    }
+
+    public boolean solveDFS(boolean animate){
+	return true;
+    }
 }
