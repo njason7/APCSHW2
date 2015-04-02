@@ -1,17 +1,10 @@
 import java.util.*;
 import java.io.*;
-public class Maze implements Deque{
+public class Maze{
 
     private char[][]maze;
     private int maxx,maxy;
     private int startx,starty;
-    private static final String clear =  "\033[2J";
-    private static final String hide =  "\033[?25l";
-    private static final String show =  "\033[?25h";    
-    private String go(int x,int y){
-	return ("\033["+x+";"+y+"H");
-    }
-    
 
     public Maze(String filename){
 	startx = -1;
@@ -49,6 +42,21 @@ public class Maze implements Deque{
 	}
     }
 
+    private String go(int x,int y){
+	return ("["+x+";"+y+"H");
+    }
+    
+    private String clear(){
+	return  "[2J";
+    }
+
+    private String hide(){
+	return  "[?25l";
+    }
+
+    private String show(){
+	return  "[?25h";
+    }
     private String invert(){
 	return  "[37";
     }
@@ -75,37 +83,6 @@ public class Maze implements Deque{
 	}
 	return hide()+invert()+go(0,0)+ans+"\n"+show();
     }
-    
-    /*    public boolean solve(){
-	if(startx < 0){
-	    System.out.println("No starting point 'S' found in maze.");
-	    return false;
-	}else{
-	    maze[startx][starty]=' ';
-	    return solve(startx,starty);
-	}
-    }
-    
-    public boolean solve(int x,int y){
-	System.out.println(this);
-	wait(20);
-	//ASSIGNMENT IS TO COMPLETE THIS PART******************
-	if (maze[x][y] == 'E'){
-	    return true;
-	}
-	if (maze[x][y] == ' '){
-	    maze[x][y] = '@';
-	    if (solve(x+1,y) || solve(x,y+1) || solve(x-1,y)||solve(x,y-1)){
-		return true;
-	    }
-	    maze[x][y] = '.';
-	    //mark the floor w/ @
-	    //try to move in all directions
-	    //when fail, replace @ w/ . 
-	}
-	//ASSIGNMENT IS TO COMPLETE THE PART ABOVE THIS******************
-	return false;//by default the maze didn't get solved
-	}*/
 
     public class Coordinates{
 
@@ -125,7 +102,7 @@ public class Maze implements Deque{
 	}
     }
 
-    private Deque<Coordinates> frontier;
+    private Deque<Coordinates> frontier = new LinkedList<Coordinates>();
 
     public boolean solveBFS(){
 	return solveBFS(false);
@@ -135,15 +112,57 @@ public class Maze implements Deque{
 	return solveDFS(false);
     }
     
-    public boolean solveBFS(boolean animate){
-	frontier.addFirst(startx,starty);
-	while (maze[frontier.peek().getr()][frontier.remove().getc()] != 'E'){
+    public boolean check(int r,int c){
+	if (maze[r+1][c] != ' ' && maze[r-1][c] != ' ' && maze[r][c+1] != ' ' && maze[r][c-1] != ' ' && maze[r+1][c] != 'E' && maze[r-1][c] != 'E' && maze[r][c+1] != 'E' && maze[r][c-1] != 'E'){
+	    return false;
+	}
+	return true;
+    }
 
+    public boolean solveBFS(boolean animate){
+	Coordinates cor = new Coordinates(startx,starty);
+	frontier.addFirst(cor);
+	int count = 0;
+	while (maze[r][c] != 'E'){
+	    int r = frontier.peek().getr();
+	    int c = frontier.remove().getc();
+	    if (animate == true){
+		System.out.println(this);
+	    }
+	    if (check(r,c)){
+		if (maze[r-1][c] == ' '){
+		    Coordinates cor1 = new Coordinates(r-1,c);
+		    frontier.addLast(cor1);
+		    maze[r-1][c] = (char)(count+1);
+		}
+		if (maze[r+1][c] == ' '){
+		    Coordinates cor2 = new Coordinates(r+1,c);
+		    frontier.addLast(cor2);
+		    maze[r+1][c] = (char)(count+1);
+		}
+		if (maze[r][c-1] == ' '){
+		    Coordinates cor3 = new Coordinates(r,c-1);
+		    frontier.addLast(cor3);
+		    maze[r][c-1] = (char)(count+1);
+		}
+		if (maze[r][c+1] == ' '){
+		    Coordinates cor4 = new Coordinates(r,c+1);
+		    frontier.addLast(cor4);
+		    maze[r][c+1] = (char)(count+1);
+		}
+		count++;
+	    }
+	    frontier.removeFirst();
 	}
 	return true;
     }
 
     public boolean solveDFS(boolean animate){
 	return true;
+    }
+
+    public static void main (String[]args){
+	Maze m = new Maze("data1.dat");
+	m.solveBFS(true);
     }
 }
