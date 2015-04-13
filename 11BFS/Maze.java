@@ -135,7 +135,7 @@ public class Maze{
 	frontier.addLast(add);
      	int r = startx;
 	int c = starty;
-	while (maze[r][c] != 'E' || check(r,c)){
+	while (maze[r][c] != 'E' && frontier.size() > 0){
 	    if (animate == true){
 		wait(25);
 		System.out.println(this);
@@ -207,7 +207,7 @@ public class Maze{
 	frontier.addLast(add);
      	int r = startx;
 	int c = starty;
-	while (maze[r][c] != 'E'){
+	while (maze[r][c] != 'E' && frontier.size() > 0){
 	    ArrayList<Coordinates> coorlist = frontier.removeFirst();
 	    Coordinates coor = coorlist.get(coorlist.size()-1);
 	    r = coor.getr();
@@ -287,7 +287,7 @@ public class Maze{
     }
     
     public static void main (String[]args){
-	Maze m = new Maze("data1.dat");
+	Maze m = new Maze("data2.dat");
 	System.out.println(m.solveBFS(true));
 	System.out.println(Arrays.toString(m.solutionCoordinates()));
     }
