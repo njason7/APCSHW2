@@ -1,13 +1,16 @@
 import java.util.*;
 
 public class MyDeque<T>{
-    int head,tail,size;
-    Object[] ary;
+    private int head,tail,size;
+    private Object[] ary;
+    private int[] priority;
+
     public MyDeque(){
 	ary = new Object[6];
 	head = 2;
 	tail = 3;
 	size = 0;
+	priority = new int[6];
     }
 
     public MyDeque(int init){
@@ -15,6 +18,7 @@ public class MyDeque<T>{
 	head = init/2;
 	tail = init/2 + 1;
 	size = 0;
+	priority = new int[init];
     }
 
     public void addFirst(T value){
@@ -49,6 +53,14 @@ public class MyDeque<T>{
 	for (int i = 0;i<head+1;i++){
 	    clone[ary.length/2+ary.length-head+i-1] = ary[i];
 	}
+	int[] copy = new int[priority.length*2];
+	for (int i = 1;i<priority.length-head;i++){
+	    copy[priority.length/2+i-1] = priority[head+i];
+	}
+	for (int i = 0;i<head+1;i++){
+	    copy[priority.length/2+priority.length-head+i-1] = priority[i];
+	}
+	priority = copy;
 	head = size/2-1;
 	tail = size*3/2;
 	return clone;
@@ -80,6 +92,21 @@ public class MyDeque<T>{
     
     public int size(){
 	return size;
+    }
+
+    public void add(T value,int prior){
+	addLast(value);
+	priority[tail] = prior;
+    }
+
+    public T removeSmallest(){
+	int smallest = priority[head];
+	int headcount = head;
+	while (headcount != tail){
+	    if (headcount == priority.length){
+		headcount = 0;
+	    }
+	    if (
     }
 
     public String toString(){
