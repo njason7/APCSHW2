@@ -8,7 +8,7 @@ public class MyDeque<T>{
     public MyDeque(){
 	ary = new Object[6];
 	head = 2;
-	tail = 3;
+	tail = 2;
 	size = 0;
 	priority = new int[6];
     }
@@ -16,33 +16,41 @@ public class MyDeque<T>{
     public MyDeque(int init){
 	ary = new Object[init];
 	head = init/2;
-	tail = init/2 + 1;
+	tail = init/2;
 	size = 0;
 	priority = new int[init];
     }
 
     public void addFirst(T value){
-	if (size == ary.length){
-	    ary = resize(ary);
+	if (head == tail && ary[head] == null){
+	    ary[head] = value;
+	}else{
+	    if (size == ary.length){
+		ary = resize(ary);
+	    }
+	    head--;
+	    if (head == -1){
+		head = ary.length-1;
+	    }
+	    ary[head] = value;
 	}
-	ary[head] = value;
-	head--;
 	size++;
-	if (head == -1){
-	    head = ary.length-1;
-	}
     }
 
     public void addLast(T value){
-	if (size == ary.length){
-	    ary = resize(ary);
-	}
-	ary[tail] = value;
-	tail++;
-	size++;
-	if (tail == ary.length){
+	if (head == tail && ary[tail] == null){
+	    ary[tail] = value;
+	}else{
+	    if (size == ary.length){
+		ary = resize(ary);
+	    }
+	    tail++;
+	    if (tail == ary.length){
 	    tail = 0;
+	    }
+	    ary[tail] = value;
 	}
+	size++;
     }
 
     public Object[] resize(Object[] ary){
@@ -67,25 +75,25 @@ public class MyDeque<T>{
     }
 
     public T removeFirst(){
+	T save = (T)ary[head];
+	ary[head] = null;
 	if (head == ary.length -1){
 	    head = 0;
 	}else{
 	    head++;
 	}
-	T save = (T)ary[head];
-	ary[head] = null;
 	size--;
 	return save;
     }
 
     public T removeLast(){
+	T save = (T)ary[tail];
+	ary[tail] = null;
 	if (tail == 0){
 	    tail = ary.length-1;
 	}else{
 	    tail--;
 	}
-	T save = (T)ary[tail];
-	ary[tail] = null;
 	size--;
 	return save;
     }
@@ -100,14 +108,15 @@ public class MyDeque<T>{
     }
 
     public T removeSmallest(){
-	int smallest = priority[head];
-	int headcount = head;
-	int lowest = head;
+	int smallest, headcount, lowest;
+	smallest = priority[head];
+	headcount = head;
+	lowest = head;
 	while (headcount != tail){
 	    if (headcount == priority.length){
 		headcount = 0;
 	    }
-	    if (priority[headcount] < smallest && priority[headcount] > 0){
+	    if (priority[headcount] < smallest){
 		smallest = priority[headcount];
 		lowest = headcount;
 	    }
@@ -115,8 +124,9 @@ public class MyDeque<T>{
 		break;
 	    }
 	    headcount++;
+	    System.out.println(smallest);
 	}
-	if (priority[tail] < smallest && priority[tail] > 0){
+	if (priority[tail] < smallest){
 	    lowest = tail;
 	}
 	T save = (T)ary[lowest];
@@ -167,13 +177,15 @@ public class MyDeque<T>{
 	test.add(1,1);
 	test.add(2,3);
 	test.add(3,2);
-	System.out.println(test.priority());
-	System.out.println(test);
-	System.out.println(test.removeSmallest());
-	System.out.println(test.priority());
-	System.out.println(test);
-	System.out.println(test.removeSmallest());
-	System.out.println(test.priority());
-	System.out.println(test);
+	//System.out.println(test.priority());
+	//System.out.println(test);
+	//System.out.println(test.removeSmallest());
+	//System.out.println(test.priority());
+	//System.out.println(test);
+	//System.out.println(test.removeSmallest());
+	//System.out.println(test.priority());
+	//System.out.println(test);
+	test.removeSmallest();
+	test.removeSmallest();
     }
 }
