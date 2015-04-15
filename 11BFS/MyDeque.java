@@ -102,11 +102,32 @@ public class MyDeque<T>{
     public T removeSmallest(){
 	int smallest = priority[head];
 	int headcount = head;
+	int lowest = head;
 	while (headcount != tail){
 	    if (headcount == priority.length){
 		headcount = 0;
 	    }
-	    if (
+	    if (priority[headcount] < smallest && priority[headcount] > 0){
+		smallest = priority[headcount];
+		lowest = headcount;
+	    }
+	    if (headcount==tail){
+		break;
+	    }
+	    headcount++;
+	}
+	if (priority[tail] < smallest && priority[tail] > 0){
+	    lowest = tail;
+	}
+	T save = (T)ary[lowest];
+	ary[lowest] = ary[head];
+	ary[head] = null;
+	priority[head] = 0;
+	head++;
+	if (head == ary.length){
+	    head = 0;
+	}
+	return save;
     }
 
     public String toString(){
@@ -123,9 +144,13 @@ public class MyDeque<T>{
 	return result;
     }	
 
+    public String priority(){
+	return Arrays.toString(priority);
+    }
+
     public static void main (String[]args){
 	MyDeque<Integer> test = new MyDeque<Integer>();
-	test.addFirst(1);
+	/*test.addFirst(1);
 	test.addFirst(2);	
 	test.addFirst(3);
 	test.addFirst(4);
@@ -138,6 +163,17 @@ public class MyDeque<T>{
 	System.out.println(test.removeLast());
 	System.out.println(test.removeLast());
 	System.out.println(test.removeLast());	
+	System.out.println(test);*/
+	test.add(1,1);
+	test.add(2,3);
+	test.add(3,2);
+	System.out.println(test.priority());
+	System.out.println(test);
+	System.out.println(test.removeSmallest());
+	System.out.println(test.priority());
+	System.out.println(test);
+	System.out.println(test.removeSmallest());
+	System.out.println(test.priority());
 	System.out.println(test);
     }
 }
