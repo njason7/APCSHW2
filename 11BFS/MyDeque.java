@@ -43,10 +43,11 @@ public class MyDeque<T>{
 	}else{
 	    if (size == ary.length){
 		ary = resize(ary);
-	    }
-	    tail++;
-	    if (tail == ary.length){
-	    tail = 0;
+	    }else{
+		tail++;
+		if (tail == ary.length){
+		    tail = 0;
+		}
 	    }
 	    ary[tail] = value;
 	}
@@ -55,22 +56,22 @@ public class MyDeque<T>{
 
     public Object[] resize(Object[] ary){
 	Object[] clone = new Object[ary.length*2];
-	for (int i = 1;i<ary.length-head;i++){
+	for (int i = 0;i<ary.length-head;i++){
 	    clone[ary.length/2+i-1] = ary[head+i];
 	}
-	for (int i = 0;i<head+1;i++){
+	for (int i = 0;i<head;i++){
 	    clone[ary.length/2+ary.length-head+i-1] = ary[i];
 	}
 	int[] copy = new int[priority.length*2];
-	for (int i = 1;i<priority.length-head;i++){
+	for (int i = 0;i<priority.length-head;i++){
 	    copy[priority.length/2+i-1] = priority[head+i];
 	}
-	for (int i = 0;i<head+1;i++){
+	for (int i = 0;i<head;i++){
 	    copy[priority.length/2+priority.length-head+i-1] = priority[i];
 	}
 	priority = copy;
 	head = size/2-1;
-	tail = size*3/2;
+	tail = size*3/2-1;
 	return clone;
     }
 
@@ -138,6 +139,7 @@ public class MyDeque<T>{
 	if (head == ary.length){
 	    head = 0;
 	}
+	size--;
 	return save;
     }
 
@@ -182,15 +184,23 @@ public class MyDeque<T>{
 	test.add(1,1);
 	test.add(2,3);
 	test.add(3,2);
+	test.add(4,1);
+	test.add(6,2);
+	test.add(5,4);
+	test.add(7,2);
 	//System.out.println(test.priority());
+	//System.out.println(test);
+	System.out.println(test);
+	System.out.println(test.raw());
+	System.out.println(test.priority());
+	System.out.println(test.removeSmallest());
+	System.out.println(test.raw());
+	System.out.println(test.priority());
 	//System.out.println(test);
 	//System.out.println(test.removeSmallest());
 	//System.out.println(test.priority());
 	//System.out.println(test);
-	//System.out.println(test.removeSmallest());
-	//System.out.println(test.priority());
-	//System.out.println(test);
-	//test.removeSmallest();
+	test.removeSmallest();
 	test.removeSmallest();
     }
 }
