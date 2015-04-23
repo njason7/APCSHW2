@@ -1,0 +1,32 @@
+public TreeNode<T>{
+    private TreeNode<T> left,right;
+    private T store;
+
+    public TreeNode(T value){
+	store = value;
+    }
+    
+    public void setRight(TreeNode<T> new){
+	right = new;
+    }
+
+    public void setLeft(TreeNode<T> new){
+	left = new;
+    }
+
+    public TreeNode<T> getRight(){
+	return right;
+    }
+
+    public TreeNode<T> getLeft(){
+	return left;
+    }
+    
+    public void setValue(T value){
+	store = value;
+    }
+
+    public T getValue(){
+	return store;
+    }
+}
