@@ -305,20 +305,23 @@ public class Maze{
     }
     
     public boolean solveBest(){
-	return solveBest(true);
+	return solveBest(false);
     }
 
     public boolean solveBest(boolean animate){
 	Coordinates cor = new Coordinates(startx,starty);
 	ArrayList add = new ArrayList<Coordinates>();
 	add.add(cor);
-	int[2] find = findE();
-	int init = dist(startx,starty,find[0],find[1]);
+	int[] find = new int[2];
+	find = findE();
+	int endx = find[0];
+	int endy = find[1];
+	int init = dist(startx,starty,endx,endy);
 	frontier.add(add,init);
      	int r = startx;
 	int c = starty;
 	while (maze[r][c] != 'E' && frontier.size() > 0){
-	    ArrayList<Coordinates> coorlist = frontier.removeFirst();
+	    ArrayList<Coordinates> coorlist = frontier.removeSmallest();
 	    Coordinates coor = coorlist.get(coorlist.size()-1);
 	    r = coor.getr();
 	    c = coor.getc();
@@ -337,8 +340,9 @@ public class Maze{
 		    for (int i=0;i<coorlist.size();i++){
 			coorlist1.add(coorlist.get(i));
 		    }
+		    int dist1 = dist(r-1,c,endx,endy);
 		    coorlist1.add(cor1);
-		    frontier.addFirst(coorlist1);
+		    frontier.add(coorlist1,dist1);
 		}
 		if (maze[r+1][c] == ' '){
 		    Coordinates cor2 = new Coordinates(r+1,c);
@@ -346,8 +350,9 @@ public class Maze{
 		    for (int i=0;i<coorlist.size();i++){
 			coorlist2.add(coorlist.get(i));
 		    }
+		    int dist2 = dist(r+1,c,endx,endy);
 		    coorlist2.add(cor2);
-		    frontier.addFirst(coorlist2);
+		    frontier.add(coorlist2,dist2);
 		}
 		if (maze[r][c-1] == ' '){
 		    Coordinates cor3 = new Coordinates(r,c-1);
@@ -355,8 +360,9 @@ public class Maze{
 		    for (int i=0;i<coorlist.size();i++){
 			coorlist3.add(coorlist.get(i));
 		    }
+		    int dist3 = dist(r,c-1,endx,endy);
 		    coorlist3.add(cor3);
-		    frontier.addFirst(coorlist3);
+		    frontier.add(coorlist3,dist3);
 		}
 		if (maze[r][c+1] == ' '){
 		    Coordinates cor4 = new Coordinates(r,c+1);
@@ -364,16 +370,105 @@ public class Maze{
 		    for (int i=0;i<coorlist.size();i++){
 			coorlist4.add(coorlist.get(i));
 		    }
+		    int dist4 = dist(r,c+1,endx,endy);
 		    coorlist4.add(cor4);
-		    frontier.addFirst(coorlist4);
+		    frontier.add(coorlist4,dist4);
 		}
 		if (maze[r-1][c] == 'E' || maze[r+1][c] == 'E' || maze[r][c-1] == 'E' || maze[r][c+1] == 'E'){
 		    save = coorlist;
 		    maze = backup;
 		    for (int i=0;i<save.size();i++){
-			maze[save.get(i).getr()][save.get(i).getc()] = '*';
-			System.out.println(this);
+			if (maze[save.get(i).getr()][save.get(i).getc()] != 'S'){
+			    maze[save.get(i).getr()][save.get(i).getc()] = '*';
+			}
 		    }
+		    System.out.println(this);
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean solveAStar(){
+	return solveAStar(false);
+    }
+    
+    public boolean solveAStar(boolean animate){
+	Coordinates cor = new Coordinates(startx,starty);
+	ArrayList add = new ArrayList<Coordinates>();
+	add.add(cor);
+	int[] find = new int[2];
+	find = findE();
+	int endx = find[0];
+	int endy = find[1];
+	int init = dist(startx,starty,endx,endy);
+	frontier.add(add,init);
+     	int r = startx;
+	int c = starty;
+	while (maze[r][c] != 'E' && frontier.size() > 0){
+	    ArrayList<Coordinates> coorlist = frontier.removeSmallest();
+	    Coordinates coor = coorlist.get(coorlist.size()-1);
+	    r = coor.getr();
+	    c = coor.getc();
+	    if (maze[r][c] != 'S' && maze[r][c] != 'E'){
+		maze[r][c] = '*';
+	    }
+	    if (animate == true){
+		wait(25);
+		System.out.println(this);
+	    }
+	    coorlist.add(coor);
+	    if (check(r,c)){
+		if (maze[r-1][c] == ' '){
+		    Coordinates cor1 = new Coordinates(r-1,c);
+		    ArrayList<Coordinates> coorlist1 = new ArrayList<Coordinates>();
+		    for (int i=0;i<coorlist.size();i++){
+			coorlist1.add(coorlist.get(i));
+		    }
+		    int dist1 = dist(r-1,c,endx,endy) + dist(r-1,c,startx,starty);
+		    coorlist1.add(cor1);
+		    frontier.add(coorlist1,dist1);
+		}
+		if (maze[r+1][c] == ' '){
+		    Coordinates cor2 = new Coordinates(r+1,c);
+		    ArrayList<Coordinates> coorlist2 = new ArrayList<Coordinates>();
+		    for (int i=0;i<coorlist.size();i++){
+			coorlist2.add(coorlist.get(i));
+		    }
+		    int dist2 = dist(r+1,c,endx,endy)+dist(r+1,c,startx,starty);
+		    coorlist2.add(cor2);
+		    frontier.add(coorlist2,dist2);
+		}
+		if (maze[r][c-1] == ' '){
+		    Coordinates cor3 = new Coordinates(r,c-1);
+		    ArrayList<Coordinates> coorlist3 = new ArrayList<Coordinates>();
+		    for (int i=0;i<coorlist.size();i++){
+			coorlist3.add(coorlist.get(i));
+		    }
+		    int dist3 = dist(r,c-1,endx,endy)+dist(r,c-1,startx,starty);
+		    coorlist3.add(cor3);
+		    frontier.add(coorlist3,dist3);
+		}
+		if (maze[r][c+1] == ' '){
+		    Coordinates cor4 = new Coordinates(r,c+1);
+		    ArrayList<Coordinates> coorlist4 = new ArrayList<Coordinates>();
+		    for (int i=0;i<coorlist.size();i++){
+			coorlist4.add(coorlist.get(i));
+		    }
+		    int dist4 = dist(r,c+1,endx,endy)+dist(r,c+1,startx,starty);
+		    coorlist4.add(cor4);
+		    frontier.add(coorlist4,dist4);
+		}
+		if (maze[r-1][c] == 'E' || maze[r+1][c] == 'E' || maze[r][c-1] == 'E' || maze[r][c+1] == 'E'){
+		    save = coorlist;
+		    maze = backup;
+		    for (int i=0;i<save.size();i++){
+			if (maze[save.get(i).getr()][save.get(i).getc()] != 'S'){
+			    maze[save.get(i).getr()][save.get(i).getc()] = '*';
+			}
+		    }
+		    System.out.println(this);
 		    return true;
 		}
 	    }
@@ -382,8 +477,8 @@ public class Maze{
     }
 
     public static void main (String[]args){
-	Maze m = new Maze("data2.dat");
-	System.out.println(m.solveBFS(true));
+	Maze m = new Maze("data1.dat");
+	System.out.println(m.solveAStar(true));
 	System.out.println(Arrays.toString(m.solutionCoordinates()));
     }
 }
