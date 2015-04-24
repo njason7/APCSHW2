@@ -7,7 +7,7 @@ public class BTree<E> {
     public static final int IN_ORDER = 1;
     public static final int POST_ORDER = 2;
     
-    Random rand = new Random();
+    Random rand = new Random(123);
 
     private TreeNode<E> root;
 
@@ -26,9 +26,9 @@ public class BTree<E> {
 	}else if (curr.getRight() == null && curr.getLeft() == null){
 	    int add = rand.nextInt(2);
 	    if (add == 0){
-		add(curr.getRight(),bn);
+		curr.setRight(bn);
 	    }else{
-		add(curr.getLeft(),bn);
+		curr.setLeft(bn);
 	    }
 	}else if (curr.getRight() == null){
 	    curr.setRight(bn);
@@ -55,15 +55,26 @@ public class BTree<E> {
     }
 
      public void preOrder(TreeNode<E> curr){
-	 String result ="";
 	 if (curr != null && curr.getValue() != null){
-	     result += curr.getValue();
+	     System.out.print(curr.getValue());
 	 }
-	 result += "\n";
-	 if (curr.getRight() != null && curr.getRight().getValue() != null){
-	     result += curr.getRight.getValue();
-	 }
-	 if (curr.getLeft() != null && curr.getLeft().getValue() != null){
-	     result += curr.getLeft.getValue();
-	 }
+	 preOrder(curr.getRight());
+	 preOrder(curr.getLeft());
+     }
+
+     public void inOrder(TreeNode<E> curr){
+
+     }
+
+     public void postOrder(TreeNode<E> curr){
+
+     }
+
+     public static void main (String[]args){
+	 BTree<Integer> t = new BTree<Integer>();
+	 t.add(1);
+	 t.add(2);
+	 t.add(3);
+	 t.traverse( PRE_ORDER);
+     }
 }

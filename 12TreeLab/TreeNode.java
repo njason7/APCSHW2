@@ -29,4 +29,8 @@ public class TreeNode<E>{
     public E getValue(){
 	return store;
     }
+
+    public String toString(){
+	return ""+store;
+    }
 }
