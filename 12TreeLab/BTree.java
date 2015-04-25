@@ -109,6 +109,33 @@ public class BTree<E> {
 	 return left0;
      }
 
+     private String getLevel(TreeNode<E> curr,int level){
+	 String result = "";
+	 if (level == 0){
+	     result += curr.getValue()+" ";
+	 }
+	 if (curr.getLeft() != null){
+	     result += getLevel(curr.getLeft(),level-1);
+	 }
+	 if (curr.getRight() != null){
+	     result += getLevel(curr.getRight(),level-1);
+	 }
+	 return result;
+     }
+
+     public String getLevel(int level){
+	 return getLevel(root,level);
+     }
+
+     public String toString(){
+	 String result = "";
+	 int height = getHeight();
+	 for (int i = 0;i<height;i++){
+	     result += getLevel(i) + "\n";
+	 }
+	 return result;
+     }
+
      public static void main (String[]args){
 	 BTree<Integer> t = new BTree<Integer>();
 	 t.add(1);
@@ -118,5 +145,7 @@ public class BTree<E> {
 	 t.traverse( IN_ORDER);
 	 t.traverse( POST_ORDER);
 	 System.out.println(t.getHeight());
+	 System.out.println(t.getLevel(1));
+	 System.out.println(t);
      }
 }
