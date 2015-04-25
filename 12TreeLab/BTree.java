@@ -21,8 +21,8 @@ public class BTree<E> {
     }
     
     private void add(TreeNode<E> curr, TreeNode<E> bn){
-	if (curr == null){
-	    curr = bn;
+	if (root == null){
+	    root = bn;
 	}else if (curr.getRight() == null && curr.getLeft() == null){
 	    int add = rand.nextInt(2);
 	    if (add == 0){
@@ -58,16 +58,55 @@ public class BTree<E> {
 	 if (curr != null && curr.getValue() != null){
 	     System.out.print(curr.getValue());
 	 }
-	 preOrder(curr.getRight());
-	 preOrder(curr.getLeft());
+	 if (curr.getLeft() != null && curr.getLeft().getValue() != null){
+	     preOrder(curr.getLeft());
+	 }
+	 if (curr.getRight() != null && curr.getRight().getValue() != null){
+	     preOrder(curr.getRight());
+	 }
      }
 
      public void inOrder(TreeNode<E> curr){
-
+	 if (curr.getLeft() != null && curr.getLeft().getValue() != null){
+	     preOrder(curr.getLeft());
+	 }
+	 if (curr != null && curr.getValue() != null){
+	     System.out.print(curr.getValue());
+	 }
+	 if (curr.getRight() != null && curr.getRight().getValue() != null){
+	     preOrder(curr.getRight());
+	 }
+     }
+     
+     public void postOrder(TreeNode<E> curr){
+	 if (curr.getLeft() != null && curr.getLeft().getValue() != null){
+	     preOrder(curr.getLeft());
+	 }
+	 if (curr.getRight() != null && curr.getRight().getValue() != null){
+	     preOrder(curr.getRight());
+	 }
+	 if (curr != null && curr.getValue() != null){
+	     System.out.print(curr.getValue());
+	 }
+     }
+     
+     public int getHeight(){
+	 return getHeight(root);
      }
 
-     public void postOrder(TreeNode<E> curr){
-
+     private int getHeight(TreeNode<E> curr){
+	 int right0 = 1;
+	 int left0 = 1;
+	 if (curr.getRight() != null){
+	     right0 = 1+getHeight(curr.getRight());
+	 }
+	 if (curr.getLeft() != null){
+	     left0 = 1+getHeight(curr.getLeft());
+	 }
+	 if(right0>left0){
+	     return right0;
+	 }
+	 return left0;
      }
 
      public static void main (String[]args){
@@ -76,5 +115,8 @@ public class BTree<E> {
 	 t.add(2);
 	 t.add(3);
 	 t.traverse( PRE_ORDER);
+	 t.traverse( IN_ORDER);
+	 t.traverse( POST_ORDER);
+	 System.out.println(t.getHeight());
      }
 }

@@ -4,6 +4,8 @@ public class TreeNode<E>{
 
     public TreeNode(E value){
 	store = value;
+	right = null;
+	left = null;
     }
     
     public void setRight(TreeNode<E> n){
