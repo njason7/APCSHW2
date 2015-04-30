@@ -138,9 +138,8 @@ public class BTree<E> {
 
      public static void main (String[]args){
 	 BTree<Integer> t = new BTree<Integer>();
-	 t.add(1);
-	 t.add(2);
-	 t.add(3);
+	 for ( int i=0; i < 8; i++ ) 
+	     t.add( i );
 	 t.traverse( PRE_ORDER);
 	 t.traverse( IN_ORDER);
 	 t.traverse( POST_ORDER);
