@@ -7,7 +7,7 @@ public class BTree<E> {
     public static final int IN_ORDER = 1;
     public static final int POST_ORDER = 2;
     
-    Random rand = new Random(123);
+    Random rand = new Random();
 
     private TreeNode<E> root;
 
