@@ -35,7 +35,7 @@ public class BSTree <T extends Comparable> {
       ====================*/
     private BSTreeNode<T> add(BSTreeNode<T> curr, BSTreeNode<T> t) {
 	if (curr == null){
-	    curr = t;
+	    return t;
 	}else if(isLeaf(curr)){
 	    if (curr.compareTo(t) < 0){
 		curr.setRight(t);
@@ -44,9 +44,9 @@ public class BSTree <T extends Comparable> {
 	    }
 	}else{
 	    if (curr.compareTo(t) > 0){
-		add(curr.getLeft(),t);
+		curr.setLeft(add(curr.getLeft(),t));
 	    }else{
-		add(curr.getRight(),t);
+		curr.setRight(add(curr.getRight(),t));
 	    }
 	}
 	return curr;
@@ -71,12 +71,54 @@ public class BSTree <T extends Comparable> {
       curr, if it exists.
       ====================*/
     private BSTreeNode<T> remove( BSTreeNode<T> curr, T c ) {
+	T save = curr.getData();
+	BSTreeNode<T> counter = new BSTreeNode<T>(curr.getData());
 	if (curr.getData().equals(c)){
-	    if (isLeaf(curr)){
-		
-	    }	
-	}
-	return null;
+	    if (isLeaf(curr) && curr == root){
+		return null;
+	    }
+	    if (curr.getRight() != null){
+		counter = curr.getRight();
+		save = counter.getData();
+		boolean move = false;
+		while (counter.getLeft() != null && counter.getLeft().getLeft() != null){
+		    counter = counter.getLeft();
+		    move = true;
+		}
+		if (counter.getLeft() != null){
+		    save = counter.getLeft().getData();
+		    counter.setLeft(null);
+		}else{
+		    if (!move){
+			curr.setRight(null);
+		    }
+		    save = counter.getData();
+		}
+	    }else if(curr.getLeft() != null){
+		counter = curr.getLeft();
+		save = counter.getData();
+		boolean move = false;
+		while(counter.getRight() != null && counter.getRight().getRight() != null){
+		    counter = counter.getRight();
+		    move = true;
+		}
+		if (counter.getRight() != null){
+		    save = counter.getRight().getData();
+		    counter.setRight(null);
+		}else{
+		    if (!move){
+			curr.setLeft(null);
+		    }
+		    save = counter.getData();
+		}
+	    }
+	}else if (curr.getData().compareTo(c) < 0){
+	    remove(curr.getRight(),c);
+	}else{
+	    remove(curr.getLeft(),c);
+	}   
+	curr.setData(save);
+	return curr;
     }
 
 
@@ -231,6 +273,17 @@ public class BSTree <T extends Comparable> {
 	BSTree<Integer> test = new BSTree();
 	test.add(2);
 	test.add(1);
+	test.add(4);
+	test.add(3);
+	test.add(5);
+	test.inOrder();
+	//System.out.println(test);
+	test.remove(2);
+	//System.out.println(test);
+	test.remove(4);
+	test.remove(3);
+	test.remove(5);
+	test.remove(1);
 	System.out.println(test);
     }
 
