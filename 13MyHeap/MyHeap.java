@@ -182,6 +182,11 @@ public class MyHeap{
 	}
 	root.setData(curr.getData());
 	curr = curr.getParent();
+	if (curr == null){
+	    numholder = new ArrayList<Integer>();
+	    numholder.add(0);
+	    return save;
+	}
 	if (curr.getRight() != null){
 	    curr.setRight(null);
 	}else{
@@ -320,20 +325,20 @@ public class MyHeap{
 	}
 
 	public static void main(String[]args){
-	    MyHeap test = new MyHeap();
+	    MyHeap test = new MyHeap(false);
 	    test.add(3);
-	    test.add(2);
-	    test.add(1);
-	    test.add(4);
-	    test.add(6);
+	    //test.add(2);
+	    //test.add(1);
+	    //test.add(4);
+	    //test.add(6);
 	    // System.out.println(test);
-	    test.add(14);
+	    // test.add(14);
 	    // System.out.println(test);
-	    test.add(7);
+	    //test.add(7);
 	    System.out.println(test);
 	    test.remove();
-	    System.out.println(test);
-	    test.remove();
+	    //System.out.println(test);
+	    //test.remove();
 	    System.out.println(test);
 	}
     }
