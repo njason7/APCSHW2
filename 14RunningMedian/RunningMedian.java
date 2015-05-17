@@ -56,11 +56,17 @@ public class RunningMedian{
 	RunningMedian test = new RunningMedian();
 	test.add(2);
 	System.out.println(test.getMedian());
-	test.add(8);
-	System.out.println(test.getMedian());
 	test.add(12);
-	System.out.println(test.getminheap());
-	System.out.println(test.getmaxheap());
+	System.out.println(test.getMedian());
+	test.add(8);
+	//System.out.println(test.getminheap());
+	//System.out.println(test.getmaxheap());
+	System.out.println(test.getMedian());
+	test.add(100);
+	System.out.println(test.getMedian());
+	test.add(200);
+	System.out.println(test.getMedian());
+	//test.add(0);
 	System.out.println(test.getMedian());
     }
 }
