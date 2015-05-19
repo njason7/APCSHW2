@@ -95,7 +95,6 @@ public class MyHeap{
 		    curr.setRight(new TreeNode<Integer>(n,curr));
 		    numholder.set(0,numholder.get(0)+1);
 		    numholder.add(n);
-		    System.out.println(numholder.indexOf(curr.getData()));
 		    while (isMax && curr.getRight().getData() > curr.getData()){
 			int count = 1;
 			while (numholder.get(count) != curr.getData()){
