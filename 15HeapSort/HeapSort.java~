@@ -1,0 +1,51 @@
+public class HeapSort{
+
+    public static void heapsort(int[] ary){
+	int start;
+	if (ary.length%2 == 0){
+	    start = ary.length/2 -1;
+	}else{
+	    start = ary.length/2;
+	}
+	for (int i = start; i >=0;i++){
+	    int index = start;
+	    while (index*2+1 < ary.length){
+		if (index*2+2 < ary.length){
+		    if (ary[index*2+2] > ary[index] && ary[index*2+2] > ary[index*2+1]){
+			int save = ary[index];
+			ary[index] = ary[index*2+2];
+			ary[index*2+2] = save;
+			index = index*2+2;
+		    }else if(ary[index*2+1] > ary[index] && ary[index*2+1] > ary[index*2+2]){
+			int save = ary[index];
+			ary[index] = ary[index*2+1];
+			ary[index*2+1] = save;
+			index = index*2+1;
+		    }else{
+			break;
+		    }
+		}else if(index*2+1 < ary.length){
+		    if (ary[index*2+1] > ary[index]){
+			int save = ary[index];
+			ary[index] = ary[index*2+1];
+			ary[index*2+1] = save;
+			index = index*2+1;
+		    }else{
+			break;
+		    }
+		}
+	    } 
+	}
+	MyHeap heap = new MyHeap();
+	for (int i =0;i<ary.length;i++){
+	    heap.add(ary[i]);
+	}
+	for (int i=ary.length-1;i>=0;i--){
+	    ary[i] = heap.remove();
+	}
+    }  
+
+    public static void main (String[]args){
+	
+    }
+}
